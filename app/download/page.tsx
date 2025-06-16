@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import '@fontsource/roboto/700.css';
+import Download from "../components/download"
+
 export const metadata: Metadata = {
   title: "Lego Linux | Download",
   description: "Lego Linux",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout() {
   return (
     <>
-	h1
+	<Download/>
 	</>
   );
 }

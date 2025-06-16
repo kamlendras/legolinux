@@ -68,16 +68,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const pageColors: { [key: string]: string } = {
-	home: "#c8983a",
+	home: "#000000",
 	packages: "#2D98D4", 
 	forums: "#57A557", 
-	wiki: "#7b1fa2", 
+	docs: "#7b1fa2", 
 	security: "#E95B4D", 
 	download: "#EC924C", 
-	github: "#424242", 
+	gitlab: "#424242", 
 };
 
-const pages = ["Packages", "Forums", "Wiki", "GitHub", "Security", "Download"];
+const pages = ["Packages", "Forums", "docs", "gitlab", "Security", "Download"];
 
 export default function DrawerAppBar(props: Props) {
 	const pathname = usePathname();
@@ -86,12 +86,12 @@ export default function DrawerAppBar(props: Props) {
 	
 	const getActiveSectionFromPath = (path: string): string => {
 		if (path === "/") return "home";
-		if (path.startsWith("/packages")) return "packages";
-		if (path.startsWith("/forums")) return "forums";
-		if (path.startsWith("/wiki")) return "wiki";
-		if (path.startsWith("/security")) return "security";
+		if (path.startsWith("https://pkgs.legolinux.org")) return "packages";
+		if (path.startsWith("forum.legolinux.org")) return "forums";
+		if (path.startsWith("docs.legolinux.org")) return "docs";
+		if (path.includes("security.legolinux.org")) return "security";
 		if (path.startsWith("/download")) return "download";
-		if (path.includes("github.com")) return "github";
+		if (path.includes("gitlab.legolinux.org")) return "gitlab";
 		return "home";
 	};
 
@@ -143,35 +143,35 @@ export default function DrawerAppBar(props: Props) {
 			</Link>
 			<Divider />
 			<List>
-				<Link href="/packages" onClick={() => handleSectionClick("packages")}>
+				<Link href="https://pkgs.legolinux.org" onClick={() => handleSectionClick("packages")}>
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Packages</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="/forums" onClick={() => handleSectionClick("forums")}>
+				<Link href="https://forum.legolinux.org" onClick={() => handleSectionClick("forums")}>
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Forums</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="/wiki" onClick={() => handleSectionClick("wiki")}>
+				<Link href="https://docs.legolinux.org" onClick={() => handleSectionClick("docs")}>
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
-							<ListItemText>Wiki</ListItemText>
+							<ListItemText>docs</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="https://github.com/kamlendras/legolinux" onClick={() => handleSectionClick("github")}>
+				<Link href="https://gitlab.legolinux.org" onClick={() => handleSectionClick("gitlab")}>
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
-							<ListItemText>GitHub</ListItemText>
+							<ListItemText>gitlab</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="/security" onClick={() => handleSectionClick("security")}>
+				<Link href="https://security.legolinux.org" onClick={() => handleSectionClick("security")}>
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Security</ListItemText>
@@ -235,7 +235,7 @@ export default function DrawerAppBar(props: Props) {
 						</Typography>
 					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						<Link href="/packages" onClick={() => handleSectionClick("packages")}>
+						<Link href="https://pkgs.legolinux.org" onClick={() => handleSectionClick("packages")}>
 							<Button
 								sx={{ 
 									my: 2, 
@@ -250,7 +250,7 @@ export default function DrawerAppBar(props: Props) {
 								Packages
 							</Button>
 						</Link>
-						<Link href="/forums" onClick={() => handleSectionClick("forums")}>
+						<Link href="https://forum.legolinux.org" onClick={() => handleSectionClick("forums")}>
 							<Button
 								sx={{ 
 									my: 2, 
@@ -265,37 +265,37 @@ export default function DrawerAppBar(props: Props) {
 								Forums
 							</Button>
 						</Link>
-						<Link href="/wiki" onClick={() => handleSectionClick("wiki")}>
+						<Link href="https://docs.legolinux.org" onClick={() => handleSectionClick("docs")}>
 							<Button
 								sx={{ 
 									my: 2, 
 									color: "white", 
 									display: "block",
-									backgroundColor: activeSection === "wiki" ? "rgba(255,255,255,0.1)" : "transparent",
+									backgroundColor: activeSection === "docs" ? "rgba(255,255,255,0.1)" : "transparent",
 									"&:hover": {
 										backgroundColor: "rgba(255,255,255,0.2)"
 									}
 								}}
 							>
-								Wiki
+								docs
 							</Button>
 						</Link>
-						<Link href="https://github.com/kamlendras/legolinux" onClick={() => handleSectionClick("github")}>
+						<Link href="https://gitlab.legolinux.org" onClick={() => handleSectionClick("gitlab")}>
 							<Button
 								sx={{ 
 									my: 2, 
 									color: "white", 
 									display: "block",
-									backgroundColor: activeSection === "github" ? "rgba(255,255,255,0.1)" : "transparent",
+									backgroundColor: activeSection === "gitlab" ? "rgba(255,255,255,0.1)" : "transparent",
 									"&:hover": {
 										backgroundColor: "rgba(255,255,255,0.2)"
 									}
 								}}
 							>
-								GitHub
+								gitlab
 							</Button>
 						</Link>
-						<Link href="/security" onClick={() => handleSectionClick("security")}>
+						<Link href="https://security.legolinux.org" onClick={() => handleSectionClick("security")}>
 							<Button
 								sx={{ 
 									my: 2, 
