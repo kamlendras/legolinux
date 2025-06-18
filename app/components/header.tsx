@@ -5,22 +5,32 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { styled, alpha } from "@mui/material/styles";
+import { styled, alpha, useTheme } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { useRouter } from 'next/navigation';
 
 interface Props {
+	/**
+	 * Injected by the documentation to work in an iframe.
+	 * You won't need it on your project.
+	 */
 	window?: () => Window;
 }
 
@@ -56,6 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	width: "100%",
 	"& .MuiInputBase-input": {
 		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
 		transition: theme.transitions.create("width"),
 		[theme.breakpoints.up("sm")]: {
@@ -67,45 +78,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-const pageColors: { [key: string]: string } = {
-	home: "#000000",
-	packages: "#2D98D4", 
-	forums: "#57A557", 
-	docs: "#7b1fa2", 
-	security: "#E95B4D", 
-	download: "#EC924C", 
-	gitlab: "#424242", 
-};
-
-const pages = ["Packages", "Forums", "docs", "gitlab", "Security", "Download"];
+const pages = ["Packages", "Forums", "Docs", "GitLab", "Security", "Download"];
 
 export default function DrawerAppBar(props: Props) {
-	const pathname = usePathname();
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-	
-	const getActiveSectionFromPath = (path: string): string => {
-		if (path === "/") return "home";
-		if (path.startsWith("https://pkgs.legolinux.org")) return "packages";
-		if (path.startsWith("forum.legolinux.org")) return "forums";
-		if (path.startsWith("docs.legolinux.org")) return "docs";
-		if (path.includes("security.legolinux.org")) return "security";
-		if (path.startsWith("/download")) return "download";
-		if (path.includes("gitlab.legolinux.org")) return "gitlab";
-		return "home";
-	};
-
-	const [activeSection, setActiveSection] = React.useState<string>(getActiveSectionFromPath(pathname));
-
-	
-	React.useEffect(() => {
-		setActiveSection(getActiveSectionFromPath(pathname));
-	}, [pathname]);
+	const theme = useTheme();
+	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+		null,
+	);
+	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+		null,
+	);
+	const [headerSearch, setHeaderSearch] = React.useState('');
+	const router = useRouter();
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
 	};
-
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElUser(event.currentTarget);
 	};
@@ -118,15 +106,6 @@ export default function DrawerAppBar(props: Props) {
 		setAnchorElUser(null);
 	};
 
-	const handleSectionClick = (section: string) => {
-		setActiveSection(section.toLowerCase());
-		handleCloseNavMenu();
-	};
-
-	const handleHomeClick = () => {
-		setActiveSection("home");
-	};
-
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -136,49 +115,49 @@ export default function DrawerAppBar(props: Props) {
 
 	const drawer = (
 		<Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-			<Link href="/" onClick={handleHomeClick}>
+			<Link href="/">
 				<Typography variant="h6" sx={{ my: 2 }}>
 					Lego Linux
 				</Typography>
 			</Link>
 			<Divider />
 			<List>
-				<Link href="https://pkgs.legolinux.org" onClick={() => handleSectionClick("packages")}>
+				<Link href="/packages">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Packages</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="https://forum.legolinux.org" onClick={() => handleSectionClick("forums")}>
+				<Link href="https://forum.legolinux.org">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Forums</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="https://docs.legolinux.org" onClick={() => handleSectionClick("docs")}>
+				<Link href="https://docs.legolinux.org">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
-							<ListItemText>docs</ListItemText>
+							<ListItemText>Docs</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="https://gitlab.legolinux.org" onClick={() => handleSectionClick("gitlab")}>
+				<Link href="https://gitlab.legolinux.org">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
-							<ListItemText>gitlab</ListItemText>
+							<ListItemText>GitHub</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="https://security.legolinux.org" onClick={() => handleSectionClick("security")}>
+				<Link href="/security">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Security</ListItemText>
 						</ListItemButton>
 					</ListItem>
 				</Link>
-				<Link href="/download" onClick={() => handleSectionClick("download")}>
+				<Link href="/download">
 					<ListItem disablePadding>
 						<ListItemButton sx={{ textAlign: "center" }}>
 							<ListItemText>Download</ListItemText>
@@ -189,185 +168,203 @@ export default function DrawerAppBar(props: Props) {
 		</Box>
 	);
 
-	const container = window !== undefined ? () => window().document.body : undefined;
-	
+	const container =
+		window !== undefined ? () => window().document.body : undefined;
 	return (
-		<AppBar 
-			position="static" 
-			style={{ 
-				background: pageColors[activeSection],
-				transition: "background-color 0.3s ease"
-			}}
+		<>
+		<AppBar
+		  position="static"
+		  elevation={3}
+		  sx={{
+			background: '#181C20',
+			backdropFilter: 'blur(8px)',
+			borderRadius: { xs: 0, md: 3 },
+			boxShadow: '0 2px 12px 0 rgba(66,133,244,0.10)',
+		  }}
 		>
-			<Container maxWidth="xl">
-				<Toolbar disableGutters>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={handleDrawerToggle}
-						sx={{ mr: 2, display: { md: "none" } }}
+		  <Container maxWidth="xl">
+			<Toolbar
+			  disableGutters
+			  sx={{
+				minHeight: 64,
+				px: { xs: 1, md: 2 },
+				display: 'flex',
+				borderRadius: { xs: 0, md: 2 },
+			  }}
+			>
+			  <IconButton
+				color="inherit"
+				aria-label="open drawer"
+				edge="start"
+				onClick={handleDrawerToggle}
+				sx={{ mr: 2, display: { md: "none" }, borderRadius: 2, p: 1.2 }}
+			  >
+				<MenuIcon />
+			  </IconButton>
+
+			  <Link href="/">
+				<img
+				  src="/white-icon.svg"
+				  height={40}
+				  width={40}
+				  style={{ marginRight: 12 }}
+				/>
+			  </Link>
+			  <Link href="/">
+				<Typography
+				  variant="h5"
+				  noWrap
+				  component="a"
+				  sx={{
+					mr: 2,
+					display: { xs: "none", md: "flex" },
+					fontWeight: 900,
+					fontSize: '1.5rem',
+					color: '#fff',
+					textDecoration: "none",
+					letterSpacing: '-0.01em',
+				  }}
+				>
+				  Lego Linux
+				</Typography>
+			  </Link>
+			  <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'center' }}>
+				{[
+				  { name: "Packages", url: "/packages", external: false },
+				  { name: "Forums", url: "https://forum.legolinux.org", external: true },
+				  { name: "Docs", url: "https://docs.legolinux.org", external: true },
+				  { name: "GitLab", url: "https://gitlab.legolinux.org", external: true },
+				  { name: "Security", url: "/security", external: false },
+				].map((page) => (
+				  page.external ? (
+					<a
+					  href={page.url}
+					  key={page.name}
+					  target="_blank"
+					  rel="noopener noreferrer"
+					  style={{ textDecoration: 'none' }}
 					>
-						<MenuIcon />
-					</IconButton>
-
-					<Link href="/" onClick={handleHomeClick}>
-						<img
-							src="/white-icon.svg"
-							height={36}
-							width={36}
-							style={{ marginRight: 10 }}
-						/>
+					  <Button
+						sx={{
+						  my: 2,
+						  color: '#fff',
+						  display: "block",
+						  borderRadius: 2,
+						  px: 2.5,
+						  fontWeight: 600,
+						  fontSize: '1.08rem',
+						  transition: 'background 0.2s',
+						  '&:hover': {
+							background: 'rgba(255,255,255,0.08)',
+						  },
+						}}
+						disableRipple
+					  >
+						{page.name}
+					  </Button>
+					</a>
+				  ) : (
+					<Link href={page.url} key={page.name}>
+					  <Button
+						sx={{
+						  my: 2,
+						  color: '#fff',
+						  display: "block",
+						  borderRadius: 2,
+						  px: 2.5,
+						  fontWeight: 600,
+						  fontSize: '1.08rem',
+						  transition: 'background 0.2s',
+						  '&:hover': {
+							background: 'rgba(255,255,255,0.08)',
+						  },
+						}}
+						disableRipple
+					  >
+						{page.name}
+					  </Button>
 					</Link>
-					<Link href="/" onClick={handleHomeClick}>
-						<Typography
-							variant="h6"
-							noWrap
-							component="a"
-							sx={{
-								mr: 2,
-								display: { xs: "none", md: "flex" },
-								color: "inherit",
-								textDecoration: "none",
-							}}
-						>
-							Lego Linux
-						</Typography>
-					</Link>
-					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						<Link href="https://pkgs.legolinux.org" onClick={() => handleSectionClick("packages")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "packages" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								Packages
-							</Button>
-						</Link>
-						<Link href="https://forum.legolinux.org" onClick={() => handleSectionClick("forums")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "forums" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								Forums
-							</Button>
-						</Link>
-						<Link href="https://docs.legolinux.org" onClick={() => handleSectionClick("docs")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "docs" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								docs
-							</Button>
-						</Link>
-						<Link href="https://gitlab.legolinux.org" onClick={() => handleSectionClick("gitlab")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "gitlab" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								gitlab
-							</Button>
-						</Link>
-						<Link href="https://security.legolinux.org" onClick={() => handleSectionClick("security")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "security" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								Security
-							</Button>
-						</Link>
-						<Link href="/download" onClick={() => handleSectionClick("download")}>
-							<Button
-								sx={{ 
-									my: 2, 
-									color: "white", 
-									display: "block",
-									backgroundColor: activeSection === "download" ? "rgba(255,255,255,0.1)" : "transparent",
-									"&:hover": {
-										backgroundColor: "rgba(255,255,255,0.2)"
-									}
-								}}
-							>
-								Download
-							</Button>
-						</Link>
-					</Box>
+				  )
+				))}
+				<Link href="/download">
+				  <Button
+					variant="contained"
+					color="primary"
+					sx={{
+					  my: 2,
+					  ml: 2,
+					  px: 3.5,
+					  borderRadius: 99,
+					  fontWeight: 700,
+					  fontSize: '1.08rem',
+					  boxShadow: 2,
+					  textTransform: 'none',
+					  letterSpacing: 0,
+					  minHeight: 44,
+					  color: '#fff',
+					  background: theme.palette.primary.main,
+					  transition: 'box-shadow 0.2s, transform 0.2s',
+					  '&:hover': {
+						boxShadow: 4,
+						transform: 'scale(1.04)',
+						background: theme.palette.primary.dark,
+					  },
+					}}
+					aria-label="Download Lego Linux"
+				  >
+					Download
+				  </Button>
+				</Link>
+			  </Box>
 
-					<nav>
-						<Drawer
-							container={container}
-							variant="temporary"
-							open={mobileOpen}
-							onClose={handleDrawerToggle}
-							ModalProps={{
-								keepMounted: true, 
-							}}
-							sx={{
-								display: { md: "block", lg: "none" },
-								"& .MuiDrawer-paper": {
-									boxSizing: "border-box",
-									width: drawerWidth,
-								},
-							}}
-						>
-							{drawer}
-						</Drawer>
-					</nav>
+			  <nav>
+				<Drawer
+				  container={container}
+				  variant="temporary"
+				  open={mobileOpen}
+				  onClose={handleDrawerToggle}
+				  ModalProps={{
+					keepMounted: true, // Better open performance on mobile.
+				  }}
+				  sx={{
+					display: { md: "block", lg: "none" },
+					"& .MuiDrawer-paper": {
+					  boxSizing: "border-box",
+					  width: drawerWidth,
+					},
+				  }}
+				>
+				  {drawer}
+				</Drawer>
+			  </nav>
 
-					<Search>
-						<SearchIconWrapper>
-							<SearchIcon />
-						</SearchIconWrapper>
-						<StyledInputBase
-							placeholder="Search…"
-							inputProps={{ "aria-label": "search" }}
-						/>
-					</Search>
-				</Toolbar>
-			</Container>
+			  <Search sx={{ ml: 2, borderRadius: 99, bgcolor: 'rgba(255,255,255,0.08)', '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' } }}>
+				<SearchIconWrapper>
+				  <SearchIcon
+				    sx={{ cursor: 'pointer' }}
+				    onClick={() => {
+				      if (headerSearch.trim()) {
+				        router.push(`/packages?query=${encodeURIComponent(headerSearch)}`);
+				      }
+				    }}
+				  />
+				</SearchIconWrapper>
+				<StyledInputBase
+				  placeholder="Search…"
+				  inputProps={{ "aria-label": "search" }}
+				  value={headerSearch}
+				  onChange={e => setHeaderSearch(e.target.value)}
+				  onKeyDown={e => {
+				    if (e.key === 'Enter' && headerSearch.trim()) {
+				      router.push(`/packages?query=${encodeURIComponent(headerSearch)}`);
+				    }
+				  }}
+				/>
+			  </Search>
+			</Toolbar>
+		  </Container>
 		</AppBar>
+		<Divider sx={{ bgcolor: 'rgba(255,255,255,0.10)', height: 2 }} />
+		</>
 	);
 }
-
-
-
-
-
-
-
-
-

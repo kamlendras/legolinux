@@ -104,7 +104,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     {
       name: 'Packages',
       icon: <Download />,
-      url: 'https://pkgs.legolinux.org',
+      url: '/packages',
     },
     {
       name: 'Forums',
@@ -119,7 +119,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     {
       name: 'Security',
       icon: <Security />,
-      url: 'https://security.legolinux.org',
+      url: '/security',
     },
     {
       name: 'Download',

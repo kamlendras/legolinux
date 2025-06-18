@@ -15,6 +15,8 @@ import {
 	Chip,
 	IconButton,
 	Paper,
+	Divider,
+	Link as MuiLink,
 } from "@mui/material";
 import {
 	styled,
@@ -22,6 +24,7 @@ import {
 	ThemeProvider,
 	createTheme,
 	keyframes,
+	responsiveFontSizes,
 } from "@mui/material/styles";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import AdbIcon from "@mui/icons-material/Adb";
@@ -36,26 +39,82 @@ import {
 	CloudDownload,
 	KeyboardArrowRight,
 } from "@mui/icons-material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const theme = createTheme({
+let theme = createTheme({
 	palette: {
-		secondary: {
-			main: "#2D98D4",
-		},
+		primary: { main: "#4285F4" }, // Google Blue
+		secondary: { main: "#EA4335" }, // Google Red
+		success: { main: "#34A853" }, // Google Green
+		warning: { main: "#FBBC05" }, // Google Yellow
 		background: {
 			default: "#0a0a0a",
 			paper: "#1a1a1a",
 		},
 		text: {
-			primary: "#ffffff",
+			primary: "#fff",
 			secondary: "#b0b0b0",
 		},
+		divider: "rgba(255,255,255,0.12)",
+	},
+	shape: {
+		borderRadius: 16,
 	},
 	typography: {
-		fontFamily: '"poppins", "Helvetica", "Arial", sans-serif',
+		fontFamily: 'Roboto, "poppins", "Helvetica", "Arial", sans-serif',
+		h1: {
+			fontWeight: 900,
+			fontSize: "4rem",
+			letterSpacing: "-0.03em",
+		},
+		h2: {
+			fontWeight: 700,
+			fontSize: "2.5rem",
+			letterSpacing: "-0.02em",
+		},
+		h5: {
+			fontWeight: 600,
+			fontSize: "1.3rem",
+		},
+		body1: {
+			fontSize: "1.1rem",
+		},
+	},
+	components: {
+		MuiCard: {
+			styleOverrides: {
+				root: {
+					transition: "box-shadow 0.3s, transform 0.3s",
+					'&:hover': {
+						boxShadow: '0 8px 32px 0 rgba(66,133,244,0.18)',
+						transform: 'translateY(-8px) scale(1.01)',
+					},
+				},
+			},
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: 12,
+					fontWeight: 700,
+					textTransform: 'none',
+					fontSize: '1.1rem',
+				},
+			},
+		},
+		MuiChip: {
+			styleOverrides: {
+				root: {
+					fontWeight: 600,
+					letterSpacing: '0.01em',
+					borderRadius: 8,
+					boxShadow: '0 2px 8px 0 rgba(66,133,244,0.08)',
+				},
+			},
+		},
 	},
 });
-
+theme = responsiveFontSizes(theme);
 
 const float = keyframes`
   0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -78,6 +137,7 @@ const HeroSection = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 	position: "relative",
 	overflow: "hidden",
+	background: `linear-gradient(120deg, ${alpha(theme.palette.primary.main, 0.08)} 0%, ${alpha(theme.palette.success.main, 0.08)} 100%)`,
 	"&::before": {
 		content: '""',
 		position: "absolute",
@@ -85,69 +145,48 @@ const HeroSection = styled(Box)(({ theme }) => ({
 		left: 0,
 		right: 0,
 		bottom: 0,
-		background: `
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 100px,
-        rgba(200, 152, 58, 0.03) 100px,
-        rgba(200, 152, 58, 0.03) 101px
-      )
-    `,
+		background: `repeating-linear-gradient(90deg, transparent, transparent 100px, ${alpha(theme.palette.warning.main, 0.03)} 100px, ${alpha(theme.palette.warning.main, 0.03)} 101px)`,
 		zIndex: 1,
 	},
 }));
-
-
 
 const HeroContent = styled(Box)({
 	position: "relative",
 	zIndex: 2,
 	textAlign: "center",
 	color: "white",
+	padding: '2rem 0',
 });
 
-const GlowingCard = styled(Card)(({ theme}) => ({
+const GlowingCard = styled(Card)(({ theme }) => ({
 	height: "100%",
 	display: "flex",
 	flexDirection: "column",
 	backdropFilter: "blur(10px)",
-	borderRadius: "20px",
+	borderRadius: Number(theme.shape.borderRadius) * 1.25,
 	transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 	position: "relative",
 	overflow: "hidden",
-	"&::before": {
-		content: '""',
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		height: "2px",
-		opacity: 0,
-		transition: "opacity 0.3s ease",
-	},
+	boxShadow: '0 4px 24px 0 rgba(66,133,244,0.10)',
 	"&:hover": {
 		transform: "translateY(-12px) scale(1.02)",
-		"&::before": {
-			opacity: 1,
-		},
+		boxShadow: '0 8px 32px 0 rgba(66,133,244,0.18)',
 	},
 }));
 
 const StatCard = styled(Paper)(({ theme }) => ({
 	padding: "2rem",
 	textAlign: "center",
-	background: "linear-gradient(145deg, #1a1a1a, #2a2a2a)",
-	border: "1px solid rgba(200, 152, 58, 0.1)",
-	borderRadius: "16px",
+	background: `linear-gradient(145deg, #1a1a1a, ${alpha(theme.palette.primary.main, 0.08)})`,
+	border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+	borderRadius: theme.shape.borderRadius,
 	transition: "all 0.3s ease",
+	boxShadow: '0 2px 8px 0 rgba(66,133,244,0.08)',
 	"&:hover": {
 		transform: "translateY(-5px)",
-		border: "1px solid rgba(200, 152, 58, 0.3)",
+		border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
 	},
 }));
-
-
 
 const pageColors = {
 	packages: "#2D98D4",
@@ -166,7 +205,7 @@ const features = [
 			"Lightning-fast package installation with intelligent dependency resolution. Features automatic updates, rollback capabilities, and secure package verification.",
 		icon: <AdbIcon fontSize="large" />,
 		color: pageColors.packages,
-		link: "https://pkgs.legolinux.org",
+		link: "/packages",
 		chips: ["0K+ Packages", "Auto-Update", "Rollback Support"],
 		highlight: "Most Popular",
 	},
@@ -194,7 +233,7 @@ const features = [
 			"Military-grade security with real-time threat detection, automated patching, and comprehensive audit logging. SOC 2 compliant and battle-tested.",
 		icon: <Shield fontSize="large" />,
 		color: pageColors.security,
-		link: "https://security.legolinux.org",
+		link: "/security",
 		chips: ["Zero-Day Protection", "SOC 2 Compliant", "24/7 Monitoring"],
 		highlight: "Enterprise Grade",
 	},
@@ -203,7 +242,7 @@ const features = [
 		description:
 			"Complete DevOps toolkit with integrated CI/CD, container orchestration, and cloud deployment tools. Built by developers, for developers.",
 		icon: <Terminal fontSize="large" />,
-		color: pageColors.gitlab,
+		color: "#5C6BC0",
 		link: "https://gitlab.legolinux.org",
 		chips: ["Full DevOps Stack", "Container Native", "Cloud Ready"],
 	},
@@ -255,8 +294,6 @@ export default function Home() {
 				{/* Hero Section */}
 				<Background height="400" width="400">
 					<HeroSection ref={heroRef}>
-					
-
 						<Container maxWidth="lg">
 							<HeroContent>
 								<Fade in={visible} timeout={1000}>
@@ -269,7 +306,7 @@ export default function Home() {
 												fontWeight: 900,
 												mb: 3,
 												maxWidth: "35ch",
-												background: "#ffffff",
+												background: 'white' ,
 												backgroundClip: "text",
 												WebkitBackgroundClip: "text",
 												WebkitTextFillColor: "transparent",
@@ -305,9 +342,7 @@ export default function Home() {
 												fontSize: { xs: "1rem", md: "1.3rem" },
 											}}
 										>
-											Experience blazing-fast performance, military-grade
-											security, and an ecosystem designed for the next
-											generation of computing
+											Experience blazing-fast performance, military-grade security, and an ecosystem designed for the next generation of computing
 										</Typography>
 										<Box
 											sx={{
@@ -316,17 +351,15 @@ export default function Home() {
 												justifyContent: "center",
 												flexWrap: "wrap",
 												mt: 6,
-											}}
+										}}
 										>
-											<Link href="/download">
-												<Button className="contained-button" size="large">
-													<Download sx={{ mr: 1 }} />
+											<Link href="/download" passHref legacyBehavior>
+												<Button variant="contained" color="primary" size="large" startIcon={<Download />} sx={{ minWidth: 180, fontWeight: 700, fontSize: '1.2rem', boxShadow: 3 }} aria-label="Download LegoLinux">
 													Download
 												</Button>
 											</Link>
-											<Link href="https://docs.legolinux.org">
-												<Button className="outlined-button" size="large">
-													<PlayArrow sx={{ mr: 1 }} />
+											<Link href="https://docs.legolinux.org" passHref legacyBehavior>
+												<Button variant="outlined" color="primary" size="large" startIcon={<PlayArrow />} sx={{ minWidth: 180, fontWeight: 700, fontSize: '1.2rem', borderWidth: 2, boxShadow: 1 }} aria-label="View Documentation">
 													Documentation
 												</Button>
 											</Link>
@@ -370,20 +403,24 @@ export default function Home() {
 				</Box>
 
 				{/* Features Section */}
-				<Box sx={{ py: 10, position: "relative" }}>
+				<Box sx={{ py: 10, position: "relative", bgcolor: theme => `linear-gradient(135deg, ${theme.palette.background.default} 60%, ${theme.palette.primary.dark} 100%)` }}>
 					<Container maxWidth="lg">
 						<Box textAlign="center" mb={8}>
 							<Typography
 								variant="h2"
 								component="h2"
 								sx={{
-									fontSize: { xs: "2.5rem", md: "4rem" },
+									fontFamily: `'Google Sans', 'Roboto', 'Arial', sans-serif`,
 									fontWeight: 900,
+									fontSize: { xs: '2.8rem', md: '4.5rem' },
+									letterSpacing: '-0.02em',
 									mb: 3,
-									background: `linear-gradient(45deg, ${pageColors.home}, ${pageColors.packages})`,
-									backgroundClip: "text",
-									WebkitBackgroundClip: "text",
-									WebkitTextFillColor: "transparent",
+									background: 'linear-gradient(90deg, #4285F4 0%, #34A853 33%, #FBBC05 66%, #EA4335 100%)',
+									backgroundClip: 'text',
+									WebkitBackgroundClip: 'text',
+									WebkitTextFillColor: 'transparent',
+									textShadow: 'none',
+									display: 'inline-block',
 								}}
 							>
 								Powerful Ecosystem
@@ -391,122 +428,159 @@ export default function Home() {
 							<Typography
 								variant="h5"
 								color="text.secondary"
-								sx={{ maxWidth: "800px", mx: "auto", lineHeight: 1.6 }}
+								sx={{
+									fontFamily: `'Google Sans', 'Roboto', 'Arial', sans-serif`,
+									fontWeight: 400,
+									fontSize: { xs: '1.15rem', md: '1.35rem' },
+									color: theme => theme.palette.text.secondary,
+									letterSpacing: 0.01,
+									lineHeight: 1.65,
+									maxWidth: '800px',
+									mx: 'auto',
+									mb: 2,
+								}}
 							>
-								Every tool, every feature, every component designed to
-								accelerate your workflow and unleash your creativity
+								Every tool, every feature, every component designed to accelerate your workflow and unleash your creativity
 							</Typography>
 						</Box>
 
-						<Grid container spacing={4}>
+						<Grid container spacing={5}>
 							{features.map((feature, index) => (
-								<Grid item xs={12} md={6} lg={4} key={index}>
-									<Fade in={visible} timeout={1500 + index * 150}>
-										<GlowingCard color={feature.color}>
-											{feature.highlight && (
-												<Box
-													sx={{
-														position: "absolute",
-														top: 16,
-														right: 16,
-														background: `linear-gradient(45deg, ${feature.color}, ${alpha(feature.color, 0.8)})`,
-														color: "white",
-														px: 2,
-														py: 0.5,
-														borderRadius: "20px",
-														fontSize: "0.75rem",
-														fontWeight: 700,
-														animation: `${glow} 2s ease-in-out infinite`,
-													}}
-												>
-													{feature.highlight}
-												</Box>
-											)}
-											<CardContent sx={{ flexGrow: 1, p: 4 }}>
-												<Box
-													sx={{
-														color: feature.color,
-														mb: 3,
-														p: 2,
-														borderRadius: "16px",
-														background: `linear-gradient(145deg, ${alpha(feature.color, 0.1)}, ${alpha(feature.color, 0.05)})`,
-														display: "inline-block",
-													}}
-												>
-													{feature.icon}
-												</Box>
-												<Typography
-													variant="h5"
-													component="h3"
-													gutterBottom
-													sx={{
-														fontWeight: 700,
-														color: "text.primary",
-														mb: 2,
-													}}
-												>
+								<Grid item xs={12} md={6} lg={4} key={index} sx={{ display: 'flex' }}>
+									<Box sx={{ width: '100%', display: 'flex', alignItems: 'stretch' }}>
+										<Card
+											elevation={3}
+											sx={{
+												position: 'relative',
+												bgcolor: theme => theme.palette.background.paper,
+												borderRadius: 5,
+												boxShadow: 3,
+												px: 3,
+												pt: 7,
+												pb: 2,
+												width: '100%',
+												display: 'flex',
+												flexDirection: 'column',
+												alignItems: 'center',
+												overflow: 'visible',
+												minHeight: 370,
+												transition: 'box-shadow 0.3s, transform 0.3s',
+												'&:hover': {
+													boxShadow: 8,
+													transform: 'translateY(-8px) scale(1.025)',
+												},
+												'&:hover .feature-avatar': {
+													transform: 'scale(1.12)',
+													boxShadow: 4,
+												},
+											}}
+										>
+											{/* Floating Avatar */}
+											<Box
+												className="feature-avatar"
+												sx={{
+													position: 'absolute',
+													top: -32,
+													left: 0,
+													right: 0,
+													mx: 'auto',
+													width: 64,
+													height: 64,
+													bgcolor: feature.color,
+													color: '#fff',
+													borderRadius: '50%',
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													boxShadow: 3,
+													fontSize: 36,
+													transition: 'transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s cubic-bezier(.4,0,.2,1)',
+													zIndex: 2,
+												}}
+											>
+												{feature.icon}
+											</Box>
+											<CardContent sx={{ flexGrow: 1, width: '100%', textAlign: 'center', px: 0, pt: 0 }}>
+												<Typography variant="h6" component="h3" sx={{ fontWeight: 800, mb: 1.5, color: 'text.primary', fontSize: '1.35rem', letterSpacing: '-0.01em' }}>
 													{feature.title}
 												</Typography>
-												<Typography
-													variant="body1"
-													color="text.secondary"
-													paragraph
-													sx={{ lineHeight: 1.7 }}
-												>
+												<Typography variant="body2" color="text.secondary" sx={{ mb: 3, minHeight: 64, fontSize: '1.08rem' }}>
 													{feature.description}
 												</Typography>
-												<Box
-													sx={{
-														display: "flex",
-														flexWrap: "wrap",
-														gap: 1,
-														mt: 3,
-													}}
-												>
+												<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
 													{feature.chips.map((chip, chipIndex) => (
 														<Chip
 															key={chipIndex}
 															label={chip}
 															size="small"
+															variant="filled"
 															sx={{
-																backgroundColor: alpha(feature.color, 0.1),
+																fontWeight: 500,
+																bgcolor: `${feature.color}22`, // soft color
 																color: feature.color,
-																fontWeight: 600,
-																border: `1px solid ${alpha(feature.color, 0.3)}`,
+																borderRadius: 2,
+																px: 1.5,
+																fontSize: '0.92rem',
+																letterSpacing: 0,
+																// Ensure chip text is readable on dark
+																'& .MuiChip-label': {
+																	color: feature.color,
+																},
 															}}
 														/>
 													))}
 												</Box>
 											</CardContent>
-											<CardActions sx={{ p: 4, pt: 0 }}>
-												<Link
+											<Divider sx={{ width: '80%', mx: 'auto', mb: 2, mt: 0, bgcolor: 'rgba(255,255,255,0.08)' }} />
+											<CardActions sx={{ width: '100%', px: 0, pb: 1, pt: 0, justifyContent: 'center' }}>
+												<MuiLink
 													href={feature.link}
-													style={{ width: "100%", textDecoration: "none" }}
+													color="inherit"
+													underline="none"
+													sx={{ width: '100%' }}
 												>
 													<Button
-													className="contained-button"
+														variant="contained"
 														fullWidth
-														endIcon={<KeyboardArrowRight />}
+														endIcon={<ArrowForwardIcon sx={{ ml: 0.5, fontSize: 22 }} />}
 														sx={{
-															color: feature.color,
-															borderColor: feature.color,
-															py: 1.5,
-															fontSize: "1rem",
-															fontWeight: 600,
-															borderRadius: "12px",
-															"&:hover": {
-																borderColor: feature.color,
-																background: `linear-gradient(145deg, ${alpha(feature.color, 0.1)}, ${alpha(feature.color, 0.05)})`,
-																transform: "translateY(-2px)",
+															fontWeight: 500,
+															borderRadius: Number(theme.shape.borderRadius) * 1.25,
+															px: 2.5,
+															py: 1.1,
+															fontSize: '1.05rem',
+															background: t => alpha(t.palette.background.paper, 0.92),
+															color: t => t.palette.text.primary,
+															border: '1.5px solid transparent',
+															boxShadow: 'none',
+															textTransform: 'none',
+															letterSpacing: 0.02,
+															minHeight: 44,
+															transition: 'box-shadow 0.18s, transform 0.18s, background 0.18s, border 0.18s',
+															'&:hover': {
+																background: t => `linear-gradient(90deg, ${feature.color}18 0%, ${feature.color}22 100%)`,
+																border: `1.5px solid ${feature.color}`,
+																boxShadow: '0 4px 16px 0 rgba(66,133,244,0.13)',
+																transform: 'scale(1.035)',
+																color: t => t.palette.text.primary,
+															},
+															'&:focus-visible': {
+																outline: '2.5px solid',
+																outlineColor: t => t.palette.primary.main,
+																outlineOffset: 2,
+															},
+															'& .MuiTouchRipple-root': {
+																borderRadius: Number(theme.shape.borderRadius) * 1.25,
 															},
 														}}
+														aria-label={`Learn more about ${feature.title}`}
 													>
-														Explore Now
+														Learn More
 													</Button>
-												</Link>
+												</MuiLink>
 											</CardActions>
-										</GlowingCard>
-									</Fade>
+										</Card>
+									</Box>
 								</Grid>
 							))}
 						</Grid>
