@@ -178,7 +178,6 @@ export default function DrawerAppBar(props: Props) {
 		  sx={{
 			background: '#181C20',
 			backdropFilter: 'blur(8px)',
-			borderRadius: { xs: 0, md: 3 },
 			boxShadow: '0 2px 12px 0 rgba(66,133,244,0.10)',
 		  }}
 		>
@@ -214,7 +213,7 @@ export default function DrawerAppBar(props: Props) {
 				<Typography
 				  variant="h5"
 				  noWrap
-				  component="a"
+				//   component="a"
 				  sx={{
 					mr: 2,
 					display: { xs: "none", md: "flex" },
@@ -364,7 +363,7 @@ export default function DrawerAppBar(props: Props) {
 			</Toolbar>
 		  </Container>
 		</AppBar>
-		<Divider sx={{ bgcolor: 'rgba(255,255,255,0.10)', height: 2 }} />
+		
 		</>
 	);
 }

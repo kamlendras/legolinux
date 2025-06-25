@@ -30,24 +30,24 @@ const darkTheme = createTheme({
 });
 
 interface Package {
-  ID: number;
-  Name: string;
-  Description: string;
-  Version: string;
-  Maintainer: string;
-  Depends?: string[];
-  FirstSubmitted?: number;
-  Keywords?: string[];
-  LastModified?: number;
-  License?: string[];
-  NumVotes?: number;
-  OutOfDate?: number | null;
-  PackageBase?: string;
-  PackageBaseID?: number;
-  Popularity?: number;
-  Submitter?: string;
-  URL?: string;
-  URLPath?: string;
+	ID: number;
+	Name: string;
+	Description: string;
+	Version: string;
+	Maintainer: string;
+	URL?: string;
+	PackageBase?: string;
+	NumVotes?: number;
+	Popularity?: number;
+	Depends?: string[];
+	FirstSubmitted?: number;
+	Keywords?: string[];
+	LastModified?: number;
+	License?: string[];
+	OutOfDate?: number | null;
+	PackageBaseID?: number;
+	Submitter?: string;
+	URLPath?: string;
 }
 
 
@@ -120,7 +120,12 @@ export default function Home() {
         const results = await searchIndex.search<Package>(debouncedQuery, {
           limit: 20,
           attributesToSearchOn: ['Name', 'Description', 'Maintainer'], // Use actual field names
-          attributesToRetrieve: ['ID', 'Name', 'Description', 'Version', 'Maintainer', 'Keywords', 'License', 'NumVotes', 'Popularity'], // Use actual field names
+          attributesToRetrieve: [
+  'ID', 'Name', 'Description', 'Version', 'Maintainer', 
+  'NumVotes', 'Popularity', 'Keywords', 'License',
+  'URL', 'PackageBase', 'Depends', 'FirstSubmitted', 
+  'LastModified', 'PackageBaseID', 'Submitter', 'URLPath', 'OutOfDate'
+], // Use actual field names
         });
         console.log('Search results:', results);
         setSearchResults(results);
