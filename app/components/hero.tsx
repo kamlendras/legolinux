@@ -206,7 +206,7 @@ const features = [
 		icon: <AdbIcon fontSize="large" />,
 		color: pageColors.packages,
 		link: "/packages",
-		chips: ["0K+ Packages", "Auto-Update", "Rollback Support"],
+		chips: ["92K+ Packages", "Auto-Update", "Rollback Support"],
 		highlight: "Most Popular",
 	},
 	{
@@ -216,7 +216,7 @@ const features = [
 		icon: <GroupIcon fontSize="large" />,
 		color: pageColors.forums,
 		link: "https://forum.legolinux.org",
-		chips: ["0K+ Members", "24/7 Support", "Expert Mentors"],
+		chips: ["1K+ Members", "24/7 Support", "Expert Mentors"],
 	},
 	{
 		title: "Comprehensive Documentation",
@@ -225,7 +225,7 @@ const features = [
 		icon: <Description fontSize="large" />,
 		color: pageColors.docs,
 		link: "https://docs.legolinux.org",
-		chips: ["0+ Guides", "Interactive Labs", "Video Tutorials"],
+		chips: ["Guides", "Interactive Labs", "Video Tutorials"],
 	},
 	{
 		title: "Enterprise Security",
@@ -260,12 +260,12 @@ const features = [
 
 const stats = [
 	{
-		number: "0K+",
+		number: "1K+",
 		label: "Active Users",
 		icon: <GroupIcon />,
 		color: "#57A557",
 	},
-	{ number: "0K+", label: "Packages", icon: <AdbIcon />, color: "#2D98D4" },
+	{ number: "92K+", label: "Packages", icon: <AdbIcon />, color: "#2D98D4" },
 	{
 		number: "99.99%",
 		label: "Uptime",

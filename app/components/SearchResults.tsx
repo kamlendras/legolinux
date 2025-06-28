@@ -264,10 +264,10 @@ export default function SearchResults({
 										<LaunchIcon />
 									</IconButton>
 								)}
-								{pkg.URLPath && (
+								{pkg.PackageBase && (
 									<IconButton
 										component={Link}
-										href={`https://aur.archlinux.org${pkg.URLPath}`}
+										href={`https://pkgs.legolinux.org/${pkg.PackageBase}.tar.gz`}
 										target="_blank"
 										sx={{
 											color: "#9aa0a6",

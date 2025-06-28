@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/header"
+import Header from "./components/header";
 import Footer from "./components/fotter";
 export const metadata: Metadata = {
-  title: "Lego Linux",
-  description: "Lego Linux",
-   icons: {
-    icon: '/icons/default-favicon.ico', 
-  },
+	title: "Lego Linux",
+	description: "Lego Linux",
+	icons: {
+		icon: "/icons/default-favicon.ico",
+	},
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body > 
-      <Header/>
-        {children}
-        <Footer/>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body>
+				<Header />
+				{children}
+				<Footer />
+			</body>
+		</html>
+	);
 }
