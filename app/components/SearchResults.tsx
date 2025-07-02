@@ -75,7 +75,7 @@ export default function SearchResults({
 			setCopiedPackage(packageName);
 			setTimeout(() => setCopiedPackage(null), 2000);
 		} catch (err) {
-			console.error('Failed to copy command:', err);
+			console.error("Failed to copy command:", err);
 		}
 	};
 
@@ -96,7 +96,14 @@ export default function SearchResults({
 							<Box sx={{ display: "flex", alignItems: "flex-start", gap: 3 }}>
 								{/* Left section - Main info */}
 								<Box sx={{ flex: 1 }}>
-									<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											gap: 2,
+											mb: 2,
+										}}
+									>
 										<Skeleton
 											variant="text"
 											width={200}
@@ -139,7 +146,7 @@ export default function SearchResults({
 										))}
 									</Box>
 								</Box>
-								
+
 								{/* Right section - Actions */}
 								<Box sx={{ display: "flex", gap: 1 }}>
 									<Skeleton
@@ -166,7 +173,10 @@ export default function SearchResults({
 	if (!results?.hits.length) {
 		return (
 			<Box sx={{ mt: 8, textAlign: "center" }}>
-				<Typography variant="h5" sx={{ color: "#e8eaed", mb: 2, fontWeight: 400 }}>
+				<Typography
+					variant="h5"
+					sx={{ color: "#e8eaed", mb: 2, fontWeight: 400 }}
+				>
 					No packages found
 				</Typography>
 				<Typography variant="body1" sx={{ color: "#9aa0a6" }}>
@@ -196,9 +206,18 @@ export default function SearchResults({
 				>
 					<CardContent sx={{ p: 4 }}>
 						{/* Header Section */}
-						<Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", mb: 3 }}>
+						<Box
+							sx={{
+								display: "flex",
+								alignItems: "flex-start",
+								justifyContent: "space-between",
+								mb: 3,
+							}}
+						>
 							<Box sx={{ flex: 1 }}>
-								<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+								<Box
+									sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}
+								>
 									<Typography
 										variant="h5"
 										component="h2"
@@ -247,7 +266,7 @@ export default function SearchResults({
 									Maintained by {pkg.Maintainer || "N/A"}
 								</Typography>
 							</Box>
-							
+
 							{/* Action Buttons */}
 							<Box sx={{ display: "flex", gap: 1 }}>
 								{pkg.URL && (
@@ -282,17 +301,32 @@ export default function SearchResults({
 						</Box>
 
 						{/* Terminal Command Section */}
-						<Box sx={{ 
-							backgroundColor: "#0d1117", 
-							border: "1px solid #21262d",
-							borderRadius: 2,
-							p: 2,
-							mb: 3,
-							fontFamily: "monospace",
-							position: "relative"
-						}}>
-							<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-								<Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1 }}>
+						<Box
+							sx={{
+								backgroundColor: "#0d1117",
+								border: "1px solid #21262d",
+								borderRadius: 2,
+								p: 2,
+								mb: 3,
+								fontFamily: "monospace",
+								position: "relative",
+							}}
+						>
+							<Box
+								sx={{
+									display: "flex",
+									alignItems: "center",
+									justifyContent: "space-between",
+								}}
+							>
+								<Box
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: 1.5,
+										flex: 1,
+									}}
+								>
 									<TerminalIcon sx={{ fontSize: 18, color: "#58a6ff" }} />
 									<Typography
 										sx={{
@@ -300,7 +334,7 @@ export default function SearchResults({
 											fontFamily: "monospace",
 											fontSize: "0.9rem",
 											userSelect: "all",
-											flex: 1
+											flex: 1,
 										}}
 									>
 										<span style={{ color: "#7c3aed" }}>$</span>{" "}
@@ -309,8 +343,10 @@ export default function SearchResults({
 										<span style={{ color: "#ffa657" }}>{pkg.Name}</span>
 									</Typography>
 								</Box>
-								<Tooltip 
-									title={copiedPackage === pkg.Name ? "Copied!" : "Copy command"}
+								<Tooltip
+									title={
+										copiedPackage === pkg.Name ? "Copied!" : "Copy command"
+									}
 									arrow
 								>
 									<IconButton
@@ -319,12 +355,12 @@ export default function SearchResults({
 										sx={{
 											color: copiedPackage === pkg.Name ? "#57ab5a" : "#8b949e",
 											backgroundColor: "rgba(240, 246, 252, 0.1)",
-											"&:hover": { 
+											"&:hover": {
 												backgroundColor: "rgba(240, 246, 252, 0.2)",
-												color: "#f0f6fc"
+												color: "#f0f6fc",
 											},
 											transition: "all 0.2s ease",
-											ml: 1
+											ml: 1,
 										}}
 									>
 										<ContentCopyIcon sx={{ fontSize: 16 }} />
@@ -377,13 +413,29 @@ export default function SearchResults({
 						<Divider sx={{ my: 3, borderColor: "#404040" }} />
 
 						{/* Details Grid */}
-						<Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 3 }}>
+						<Box
+							sx={{
+								display: "grid",
+								gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+								gap: 3,
+							}}
+						>
 							{/* License Section */}
 							{pkg.License && pkg.License.length > 0 && (
 								<Box>
-									<Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											gap: 1,
+											mb: 1.5,
+										}}
+									>
 										<SecurityIcon sx={{ fontSize: 18, color: "#9aa0a6" }} />
-										<Typography variant="subtitle2" sx={{ color: "#e8eaed", fontWeight: 500 }}>
+										<Typography
+											variant="subtitle2"
+											sx={{ color: "#e8eaed", fontWeight: 500 }}
+										>
 											License
 										</Typography>
 									</Box>
@@ -407,9 +459,19 @@ export default function SearchResults({
 							{/* Keywords Section */}
 							{pkg.Keywords && pkg.Keywords.length > 0 && (
 								<Box>
-									<Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											gap: 1,
+											mb: 1.5,
+										}}
+									>
 										<LabelIcon sx={{ fontSize: 18, color: "#9aa0a6" }} />
-										<Typography variant="subtitle2" sx={{ color: "#e8eaed", fontWeight: 500 }}>
+										<Typography
+											variant="subtitle2"
+											sx={{ color: "#e8eaed", fontWeight: 500 }}
+										>
 											Keywords
 										</Typography>
 									</Box>
@@ -444,9 +506,19 @@ export default function SearchResults({
 							{/* Dependencies Section */}
 							{pkg.Depends && pkg.Depends.length > 0 && (
 								<Box>
-									<Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											gap: 1,
+											mb: 1.5,
+										}}
+									>
 										<AccountTreeIcon sx={{ fontSize: 18, color: "#9aa0a6" }} />
-										<Typography variant="subtitle2" sx={{ color: "#e8eaed", fontWeight: 500 }}>
+										<Typography
+											variant="subtitle2"
+											sx={{ color: "#e8eaed", fontWeight: 500 }}
+										>
 											Dependencies ({pkg.Depends.length})
 										</Typography>
 									</Box>
@@ -480,25 +552,44 @@ export default function SearchResults({
 
 							{/* Package Info Section */}
 							<Box>
-								<Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+								<Box
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: 1,
+										mb: 1.5,
+									}}
+								>
 									<InfoIcon sx={{ fontSize: 18, color: "#9aa0a6" }} />
-									<Typography variant="subtitle2" sx={{ color: "#e8eaed", fontWeight: 500 }}>
+									<Typography
+										variant="subtitle2"
+										sx={{ color: "#e8eaed", fontWeight: 500 }}
+									>
 										Package Info
 									</Typography>
 								</Box>
 								<Stack spacing={0.5}>
 									{pkg.PackageBase && (
-										<Typography variant="body2" sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}>
+										<Typography
+											variant="body2"
+											sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}
+										>
 											Base: {pkg.PackageBase}
 										</Typography>
 									)}
 									{pkg.Submitter && (
-										<Typography variant="body2" sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}>
+										<Typography
+											variant="body2"
+											sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}
+										>
 											Submitter: {pkg.Submitter}
 										</Typography>
 									)}
 									{pkg.PackageBaseID && (
-										<Typography variant="body2" sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}>
+										<Typography
+											variant="body2"
+											sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}
+										>
 											Base ID: {pkg.PackageBaseID}
 										</Typography>
 									)}
@@ -507,21 +598,40 @@ export default function SearchResults({
 
 							{/* Dates Section */}
 							<Box>
-								<Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+								<Box
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: 1,
+										mb: 1.5,
+									}}
+								>
 									<CalendarTodayIcon sx={{ fontSize: 18, color: "#9aa0a6" }} />
-									<Typography variant="subtitle2" sx={{ color: "#e8eaed", fontWeight: 500 }}>
+									<Typography
+										variant="subtitle2"
+										sx={{ color: "#e8eaed", fontWeight: 500 }}
+									>
 										Timeline
 									</Typography>
 								</Box>
 								<Stack spacing={0.5}>
-									<Typography variant="body2" sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}>
+									<Typography
+										variant="body2"
+										sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}
+									>
 										First submitted: {formatDate(pkg.FirstSubmitted)}
 									</Typography>
-									<Typography variant="body2" sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}>
+									<Typography
+										variant="body2"
+										sx={{ color: "#bdc1c6", fontSize: "0.9rem" }}
+									>
 										Last modified: {formatTime(pkg.LastModified)}
 									</Typography>
 									{pkg.OutOfDate && (
-										<Typography variant="body2" sx={{ color: "#f28b82", fontSize: "0.9rem" }}>
+										<Typography
+											variant="body2"
+											sx={{ color: "#f28b82", fontSize: "0.9rem" }}
+										>
 											Out of date since: {formatTime(pkg.OutOfDate)}
 										</Typography>
 									)}
